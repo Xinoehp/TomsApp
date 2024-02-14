@@ -6,8 +6,6 @@ public class Character {
 
     public Brawn Brawn { get; set; } = new();
 
-    public Skill Hacking { get; set; } = new();
-
     public Brains Brains { get; set; } = new();
 
     public Perception Perception { get; set; } = new();
