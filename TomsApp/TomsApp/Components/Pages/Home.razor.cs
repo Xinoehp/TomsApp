@@ -16,14 +16,14 @@ public partial class Home
     private ISnackbar _snackbar { get; set; } = default!;
 
     private Character _character = new();
-    private string? _newSkill;
+    private string? newSkill;
 
-    private void AddSkill()
+    private void AddSkill(List<Skill> Skills)
     {
-        if (!string.IsNullOrWhiteSpace(_newSkill))
+        if (!string.IsNullOrWhiteSpace(newSkill))
         {
-            _character.Brawn.Skills.Add(new Skill { Name = _newSkill });
-            _newSkill = string.Empty;
+            Skills.Add(new Skill { Name = newSkill });
+            newSkill = string.Empty;
             _snackbar.Add("Skill added", Severity.Info);
         }
     }
@@ -54,4 +54,5 @@ public partial class Home
     {
         _character.Name = value;
     }
+
 }
