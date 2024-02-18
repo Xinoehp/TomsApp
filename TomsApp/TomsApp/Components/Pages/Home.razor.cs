@@ -18,13 +18,14 @@ public partial class Home
     private Character _character = new();
     private string? newSkill;
 
-    private void AddSkill(List<Skill> Skills)
+    /*async*/ private void AddSkill(List<Skill> Skills)
     {
         if (!string.IsNullOrWhiteSpace(newSkill))
         {
             Skills.Add(new Skill { Name = newSkill });
             newSkill = string.Empty;
             _snackbar.Add("Skill added", Severity.Info);
+            //await Save();
         }
     }
 
