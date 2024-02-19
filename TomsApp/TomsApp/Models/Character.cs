@@ -1,24 +1,34 @@
 ﻿namespace TomsApp.Models; 
 public class Character {
-    public string Name { get; set; } = string.Empty;
 
+    // General
+    public string Name { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
     public string Species { get; set; } = string.Empty;
 
-    public Brawn Brawn { get; set; } = new();
+    // Stats and Skills
+    public Stat Brawn { get; set; } = new Stat { Name = "Brawn" };
+    public Stat Brains { get; set; } = new Stat { Name = "Brains" };
+    public Stat Perception { get; set; } = new Stat { Name = "Perception" };
+    public Stat Reflexes { get; set; } = new Stat { Name = "Reflexes" };
+    public Stat Allure { get; set; } = new Stat { Name = "Allure" };
+    public Stat Guts { get; set; } = new Stat { Name = "Guts" };
 
-    public Brains Brains { get; set; } = new();
+    // Hit Points
+    public HitPoints Grit { get; set; } = new HitPoints { Name = "Grit" };
+    public HitPoints Endurance { get; set; } = new HitPoints { Name = "Endurance" };
+    public HitPoints Pressure { get; set; } = new HitPoints { Name = "Pressure" };
+    public HitPoints Morale { get; set; } = new HitPoints { Name = "Morale" };
 
-    public Perception Perception { get; set; } = new();
+    // Other stats
+    public int Disconnect { get; set; }
+    public int Exp { get; set; }
 
-    public Reflexes Reflexes { get; set; } = new();
 
-    public Allure Allure { get; set; } = new();
+    // Armour and Weapons
+    public Armour Armour { get; set; } = new();
+	public List<Weapon> Weapons { get; set; } = new List<Weapon>();
 
-    public Guts Guts { get; set; } = new();
-
-    public HitPoints Grit { get; set; } = new();
-    public HitPoints Endurance { get; set; } = new();
-    public HitPoints Pressure { get; set; } = new();
-    public HitPoints Morale { get; set; } = new();
+	// Items and Other
+	public List<string> Others { get; set; } = new List<string>();
 }

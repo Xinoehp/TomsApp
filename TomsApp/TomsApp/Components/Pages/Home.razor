@@ -17,180 +17,95 @@
 			<MudText Typo="Typo.h3">Stats and Skills</MudText>
 			<MudGrid Spacing="3">
 
-				<MudItem xs="12" sm="4">
-					<MudPaper>
-						<MudText Typo="Typo.h4">Brawn</MudText>
-						<MudNumericField T="int" @bind-Value="_character.Brawn.Stat" HelperText="Stat" />
-						<MudList>
-							@foreach (Skill skill in _character.Brawn.Skills)
-							{
-								<MudListItem>
-									<MudField>@skill.Name</MudField>
-									<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Brawn.Skills.Remove(skill))" />
-								</MudListItem>
-								<MudListItem>
-									<MudCheckBox @bind-Value="@skill.Advanced"> Advanced? </MudCheckBox>
-									<MudCheckBox @bind-Value="@skill.Specialised"> Specialised? </MudCheckBox>
-								</MudListItem>
-								<MudDivider />
-							}
-						</MudList>
+				<StatsAndSkills Stat="_character.Brawn" />
+				<StatsAndSkills Stat="_character.Brains" />
+				<StatsAndSkills Stat="_character.Perception" />
+				<StatsAndSkills Stat="_character.Reflexes" />
+				<StatsAndSkills Stat="_character.Allure" />
+				<StatsAndSkills Stat="_character.Guts" />
 
-						<MudTextField @bind-Value="newSkill" Label="Skill" Variant="Variant.Text"></MudTextField>
-						<MudButton OnClick="@(() => AddSkill(_character.Brawn.Skills))">Add skill</MudButton>
-
-					</MudPaper>
-				</MudItem>
-				<MudItem xs="12" sm="4">
-					<MudPaper>
-						<MudText Typo="Typo.h4">Brains</MudText>
-						<MudNumericField T="int" @bind-Value="_character.Brains.Stat" HelperText="Stat" />
-						<MudList>
-							@foreach (Skill skill in _character.Brains.Skills)
-							{
-								<MudListItem>
-									<MudField>@skill.Name</MudField>
-										<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Brains.Skills.Remove(skill))" />
-									</MudListItem>
-								<MudListItem>
-									<MudCheckBox @bind-Value="@skill.Advanced"> Advanced? </MudCheckBox>
-									<MudCheckBox @bind-Value="@skill.Specialised"> Specialised? </MudCheckBox>
-								</MudListItem>
-								<MudDivider />
-							}
-						</MudList>
-
-						<MudTextField @bind-Value="newSkill" Label="Skill" Variant="Variant.Text"></MudTextField>
-						<MudButton OnClick="@(() => AddSkill(_character.Brains.Skills))">Add skill</MudButton>
-
-					</MudPaper>
-				</MudItem>
-				<MudItem xs="12" sm="4">
-					<MudPaper>
-						<MudText Typo="Typo.h4">Perception</MudText>
-						<MudNumericField T="int" @bind-Value="_character.Perception.Stat" HelperText="Stat" />
-
-						<MudList>
-							@foreach (Skill skill in _character.Perception.Skills)
-							{
-								<MudListItem>
-									<MudField>@skill.Name</MudField>
-									<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Perception.Skills.Remove(skill))" />
-								</MudListItem>
-								<MudListItem>
-									<MudCheckBox @bind-Value="@skill.Advanced"> Advanced? </MudCheckBox>
-									<MudCheckBox @bind-Value="@skill.Specialised"> Specialised? </MudCheckBox>
-								</MudListItem>
-								<MudDivider />
-							}
-						</MudList>
-
-						<MudTextField @bind-Value="newSkill" Label="Skill" Variant="Variant.Text"></MudTextField>
-						<MudButton OnClick="@(() => AddSkill(_character.Perception.Skills))">Add skill</MudButton>
-
-					</MudPaper>
-				</MudItem>
-				<MudItem xs="12" sm="4">
-					<MudPaper>
-						<MudText Typo="Typo.h4">Reflexes</MudText>
-						<MudNumericField T="int" @bind-Value="_character.Reflexes.Stat" HelperText="Stat" />
-
-						<MudList>
-							@foreach (Skill skill in _character.Reflexes.Skills)
-							{
-								<MudListItem>
-									<MudField>@skill.Name</MudField>
-										<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Reflexes.Skills.Remove(skill))" />
-									</MudListItem>
-								<MudListItem>
-									<MudCheckBox @bind-Value="@skill.Advanced"> Advanced? </MudCheckBox>
-									<MudCheckBox @bind-Value="@skill.Specialised"> Specialised? </MudCheckBox>
-								</MudListItem>
-								<MudDivider />
-							}
-						</MudList>
-
-						<MudTextField @bind-Value="newSkill" Label="Skill" Variant="Variant.Text"></MudTextField>
-						<MudButton OnClick="@(() => AddSkill(_character.Reflexes.Skills))">Add skill</MudButton>
-
-					</MudPaper>
-				</MudItem>
-				<MudItem xs="12" sm="4">
-					<MudPaper>
-						<MudText Typo="Typo.h4">Allure</MudText>
-						<MudNumericField T="int" @bind-Value="_character.Allure.Stat" HelperText="Stat" />
-
-						<MudList>
-							@foreach (Skill skill in _character.Allure.Skills)
-							{
-								<MudListItem>
-									<MudField>@skill.Name</MudField>
-										<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Allure.Skills.Remove(skill))" />
-									</MudListItem>
-								<MudListItem>
-									<MudCheckBox @bind-Value="@skill.Advanced"> Advanced? </MudCheckBox>
-									<MudCheckBox @bind-Value="@skill.Specialised"> Specialised? </MudCheckBox>
-								</MudListItem>
-								<MudDivider />
-							}
-						</MudList>
-
-						<MudTextField @bind-Value="newSkill" Label="Skill" Variant="Variant.Text"></MudTextField>
-						<MudButton OnClick="@(() => AddSkill(_character.Allure.Skills))">Add skill</MudButton>
-
-					</MudPaper>
-				</MudItem>
-				<MudItem xs="12" sm="4">
-					<MudPaper>
-						<MudText Typo="Typo.h4">Guts</MudText>
-						<MudNumericField T="int" @bind-Value="_character.Guts.Stat" HelperText="Stat" />
-
-						<MudCard>
-							@foreach (Skill skill in _character.Guts.Skills)
-							{
-								<MudCardContent>
-									<MudField>@skill.Name</MudField>
-									<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Guts.Skills.Remove(skill))" />
-								</MudCardContent>
-								<MudCardContent>
-									<MudCheckBox @bind-Value="@skill.Advanced"> Advanced? </MudCheckBox>
-									<MudCheckBox @bind-Value="@skill.Specialised"> Specialised? </MudCheckBox>
-								</MudCardContent>
-								<MudDivider />
-							}
-						</MudCard>
-
-						<MudTextField @bind-Value="newSkill" Label="Skill" Variant="Variant.Text"></MudTextField>
-						<MudButton OnClick="@(() => AddSkill(_character.Guts.Skills))">Add skill</MudButton>
-
-					</MudPaper>
-				</MudItem>
 			</MudGrid>
 
 			<MudCard>
-				<MudCardContent Style="display: inline-flex;">
-					<MudTextField T="int" @bind-Value="_character.Grit.Current" HelperText="Current Grit" />
-					<MudTextField T="int" @bind-Value="_character.Grit.Max" HelperText="Max Grit" />
+				<MudCardContent Style="display: flex;">
+					<MudNumericField T="int" @bind-Value="_character.Grit.Current" HelperText="Current Grit" />
+					<MudNumericField T="int" @bind-Value="_character.Grit.Max" HelperText="Max Grit" />
 				</MudCardContent>
 			</MudCard>
-			<MudList>
-				<MudListItem>
-					<MudTextField T="int" @bind-Value="_character.Endurance.Current" HelperText="Current Endurance" />
-					<MudTextField T="int" @bind-Value="_character.Endurance.Max" HelperText="Max Endurance" />
-				</MudListItem>
-				<MudListItem>
-					<MudTextField T="int" @bind-Value="_character.Pressure.Current" HelperText="Current Pressure" />
-					<MudTextField T="int" @bind-Value="_character.Pressure.Max" HelperText="Max Pressure" />
-				</MudListItem>
-				<MudListItem>
-					<MudTextField T="int" @bind-Value="_character.Morale.Current" HelperText="Current Morale" />
-					<MudTextField T="int" @bind-Value="_character.Morale.Max" HelperText="Max Morale" />
-				</MudListItem>
-			</MudList>
+			<MudCard>
+				<MudText Typo="Typo.h3">Hit Points</MudText>
+				<MudCardContent Style="display: flex;">
+					<MudNumericField T="int" @bind-Value="_character.Endurance.Current" HelperText="Current Endurance" />
+					<MudNumericField T="int" @bind-Value="_character.Endurance.Max" HelperText="Max Endurance" />
+				</MudCardContent>
+				<MudCardContent Style="display: flex;">
+					<MudNumericField T="int" @bind-Value="_character.Pressure.Current" HelperText="Current Pressure" />
+					<MudNumericField T="int" @bind-Value="_character.Pressure.Max" HelperText="Max Pressure" />
+				</MudCardContent>
+				<MudCardContent Style="display: flex;">
+					<MudNumericField T="int" @bind-Value="_character.Morale.Current" HelperText="Current Morale" />
+					<MudNumericField T="int" @bind-Value="_character.Morale.Max" HelperText="Max Morale" />
+				</MudCardContent>
+			</MudCard>
+
+			<MudCard>
+				<MudCardContent Style="display: flex;">
+					<MudNumericField T="int" @bind-Value="_character.Disconnect" HelperText="Disconnect" />
+					<MudNumericField T="int" @bind-Value="_character.Exp" HelperText="Exp" />
+				</MudCardContent>
+			</MudCard>
+
+			<MudCard>
+				<MudText Typo="Typo.h3">Armour</MudText>
+				<MudCardContent Style="display: flex;">
+					<MudTextField T="string" @bind-Value="_character.Armour.Name" HelperText="Armour" />
+					<MudTextField T="string" @bind-Value="_character.Armour.Protection" HelperText="Protection" />
+					<MudTextField T="string" @bind-Value="_character.Armour.Tolerance" HelperText="Tolerance" />
+				</MudCardContent>
+			</MudCard>
+
+			<MudCard>
+				<MudText Typo="Typo.h3">Weapons</MudText>
+
+				@foreach (Weapon weapon in _character.Weapons)
+				{
+					<MudCardContent Style="display: flex;">
+						<MudTextField T="string" @bind-Value="@weapon.Name" HelperText="Weapon" />
+						<MudTextField T="string" @bind-Value="@weapon.Skill" HelperText="Skill" />
+						<MudTextField T="string" @bind-Value="@weapon.Range" HelperText="Range" />
+						<MudTextField T="string" @bind-Value="@weapon.Damage" HelperText="Damage" />
+						<MudTextField T="string" @bind-Value="@weapon.Clip" HelperText="Clip" />
+						<MudTextField T="string" @bind-Value="@weapon.Rules" HelperText="Rules" />
+						<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Weapons.Remove(weapon))" />
+					</MudCardContent>
+					<MudDivider />
+					}
+
+				<MudTextField @bind-Value="newWeapon" Label="Weapon" Variant="Variant.Text"></MudTextField>
+				<MudButton OnClick="@(() => AddWeapon(_character.Weapons))">Add weapon</MudButton>
+
+			</MudCard>
+
+			<MudCard>
+				<MudText Typo="Typo.h3">Cybernetics, equipment, cash, notes...</MudText>
+
+				@foreach (string o in _character.Others)
+				{
+					string other = o;
+					<MudCardContent Style="display: flex;">
+						<MudTextField T="string" @bind-Value="@other" />
+						<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Others.Remove(other))" />
+					</MudCardContent>
+					<MudDivider />
+				}
+
+				<MudTextField @bind-Value="newOther" Label="Add new" Variant="Variant.Text"></MudTextField>
+				<MudButton OnClick="@(() => AddOther(_character.Others))">Add</MudButton>
+
+			</MudCard>
 
 			<MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Save</MudButton>
 
 		</EditForm>
 	</MudPaper>
 </MudContainer>
-

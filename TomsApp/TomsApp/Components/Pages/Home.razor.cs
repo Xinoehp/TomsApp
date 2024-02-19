@@ -17,17 +17,8 @@ public partial class Home
 
     private Character _character = new();
     private string? newSkill;
-
-    /*async*/ private void AddSkill(List<Skill> Skills)
-    {
-        if (!string.IsNullOrWhiteSpace(newSkill))
-        {
-            Skills.Add(new Skill { Name = newSkill });
-            newSkill = string.Empty;
-            _snackbar.Add("Skill added", Severity.Info);
-            //await Save();
-        }
-    }
+    private string? newWeapon;
+    private string? newOther;
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         if (!firstRender)
@@ -55,5 +46,27 @@ public partial class Home
     {
         _character.Name = value;
     }
+
+	private void AddWeapon(List<Weapon> Weapons)
+	{
+		if (!string.IsNullOrWhiteSpace(newWeapon))
+		{
+			Weapons.Add(new Weapon { Name = newWeapon });
+			newWeapon = string.Empty;
+			_snackbar.Add("Weapon added", Severity.Info);
+			//await Save();
+		}
+	}
+
+	private void AddOther(List<string> Others)
+	{
+		if (!string.IsNullOrWhiteSpace(newOther))
+		{
+			Others.Add(newOther);
+			newOther = string.Empty;
+			_snackbar.Add("Added", Severity.Info);
+			//await Save();
+		}
+	}
 
 }

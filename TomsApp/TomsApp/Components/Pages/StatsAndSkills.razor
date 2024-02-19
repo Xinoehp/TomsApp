@@ -1,0 +1,25 @@
+@using TomsApp.Models
+<MudItem xs="12" sm="4">
+	<MudPaper>
+		<MudText Typo="Typo.h4">@Stat.Name</MudText>
+			<MudNumericField T="int" @bind-Value=@Stat.Value HelperText="Stat" Min="1" Max="10" />
+			<MudCard>
+			@foreach (Skill skill in @Stat.Skills)
+			{
+				<MudCardContent Style="display: flex;">
+					<MudField>@skill.Name</MudField>
+						<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => @Stat.Skills.Remove(skill))" />
+					</MudCardContent>
+				<MudCardContent Style="display: inline-flex;">
+					<MudCheckBox @bind-Value="@skill.Advanced"> Advanced? </MudCheckBox>
+					<MudCheckBox @bind-Value="@skill.Specialised"> Specialised? </MudCheckBox>
+				</MudCardContent>
+				<MudDivider />
+			}
+		</MudCard>
+
+		<MudTextField @bind-Value="newSkill" Label="Skill" Variant="Variant.Text"></MudTextField>
+		<MudButton OnClick="@(() => AddSkill(@Stat.Skills))">Add skill</MudButton>
+
+	</MudPaper>
+</MudItem>
