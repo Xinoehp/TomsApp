@@ -1,15 +1,15 @@
 @using TomsApp.Models
 <MudItem xs="12" sm="4">
 	<MudPaper>
-		<MudText Typo="Typo.h4">@StatName</MudText>
-		<MudNumericField T="int" @bind-Value=@Stat.Value HelperText="Stat" />
-		<MudCard>
+		<MudText Typo="Typo.h4">@Stat.Name</MudText>
+			<MudNumericField T="int" @bind-Value=@Stat.Value HelperText="Stat" Min="1" Max="10" />
+			<MudCard>
 			@foreach (Skill skill in @Stat.Skills)
 			{
 				<MudCardContent Style="display: flex;">
 					<MudField>@skill.Name</MudField>
-					<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => @Stat.Skills.Remove(skill))" />
-				</MudCardContent>
+						<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => @Stat.Skills.Remove(skill))" />
+					</MudCardContent>
 				<MudCardContent Style="display: inline-flex;">
 					<MudCheckBox @bind-Value="@skill.Advanced"> Advanced? </MudCheckBox>
 					<MudCheckBox @bind-Value="@skill.Specialised"> Specialised? </MudCheckBox>
@@ -23,33 +23,3 @@
 
 	</MudPaper>
 </MudItem>
-
-@code {
-	[Inject]
-	private ISnackbar _snackbar { get; set; } = default!;
-
-
-	[Parameter]
-	[EditorRequired]
-	public Character? Character { get; set; }
-	[Parameter]
-	[EditorRequired]
-	public Stat? Stat { get; set; }
-	[Parameter]
-	[EditorRequired]
-	public string? StatName { get; set; }
-
-	private string? newSkill;
-
-	/*async*/
-	private void AddSkill(List<Skill> Skills)
-	{
-		if (!string.IsNullOrWhiteSpace(newSkill))
-		{
-			Skills.Add(new Skill { Name = newSkill });
-			newSkill = string.Empty;
-			_snackbar.Add("Skill added", Severity.Info);
-			//await Save();
-		}
-	}
-}
