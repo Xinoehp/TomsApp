@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomsApp", "TomsApp\TomsApp\TomsApp.csproj", "{24EF05D7-74BE-4B2F-B888-036036D4382F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TomsApp", "TomsApp\TomsApp\TomsApp.csproj", "{24EF05D7-74BE-4B2F-B888-036036D4382F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomsApp.Client", "TomsApp\TomsApp.Client\TomsApp.Client.csproj", "{E663D78A-F5C2-48CB-88BA-2D078A41418D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TomsApp.Client", "TomsApp\TomsApp.Client\TomsApp.Client.csproj", "{E663D78A-F5C2-48CB-88BA-2D078A41418D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

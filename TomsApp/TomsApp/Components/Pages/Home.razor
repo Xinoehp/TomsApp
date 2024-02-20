@@ -79,7 +79,7 @@
 						<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Weapons.Remove(weapon))" />
 					</MudCardContent>
 					<MudDivider />
-					}
+				}
 
 				<MudTextField @bind-Value="newWeapon" Label="Weapon" Variant="Variant.Text"></MudTextField>
 				<MudButton OnClick="@(() => AddWeapon(_character.Weapons))">Add weapon</MudButton>
@@ -104,7 +104,25 @@
 
 			</MudCard>
 
-			<MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Save</MudButton>
+			<MudCard>
+				<MudCardContent Style="display: flex;">
+					<MudButton OnClick="@(() => ExportCharacterAsync())">Export Character</MudButton>
+					<MudButton OnClick="@(() => ClearCharacterSelected())">New Character</MudButton>
+					<MudFileUpload T="IBrowserFile" Accept=".json" Context="fileInput" FilesChanged="UploadFiles">
+						<ButtonTemplate>
+							<MudButton HtmlTag="label"
+									   Variant="Variant.Filled"
+									   Color="Color.Primary"
+									   StartIcon="@Icons.Material.Filled.CloudUpload"
+									   for="@fileInput">
+								Upload Character
+							</MudButton>
+						</ButtonTemplate>
+					</MudFileUpload>
+					<MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Save</MudButton>
+				</MudCardContent>
+			</MudCard>
+
 
 		</EditForm>
 	</MudPaper>
