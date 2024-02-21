@@ -2,11 +2,8 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System.Text.Json;
-using System.Text;
 using TomsApp.Models;
 using Microsoft.JSInterop;
-using Microsoft.AspNetCore.Mvc;
-using static MudBlazor.CategoryTypes;
 using Microsoft.AspNetCore.Components.Forms;
 
 
@@ -28,11 +25,8 @@ public partial class Home
 	private IDialogService _dialogService { get; set; } = default!;
 
 	private Character _character = new();
-	private string? newSkill;
 	private string? newWeapon;
 	private string? newOther;
-	private bool showClearDialog;
-	IList<IBrowserFile> files = new List<IBrowserFile>();
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
@@ -59,7 +53,7 @@ public partial class Home
 	private async Task Save()
 	{
 		await _localStorageService.SetItemAsync(CHARACTER, _character);
-		_snackbar.Add("Saved Successfully", Severity.Info);
+		_snackbar.Add("Saved Successfully", Severity.Success);
 	}
 
 	private void AddWeapon(List<Weapon> Weapons)
@@ -68,7 +62,7 @@ public partial class Home
 		{
 			Weapons.Add(new Weapon { Name = newWeapon });
 			newWeapon = string.Empty;
-			_snackbar.Add("Weapon added", Severity.Info);
+			_snackbar.Add("Weapon added", Severity.Success);
 			//await Save();
 		}
 	}
@@ -79,7 +73,7 @@ public partial class Home
 		{
 			Others.Add(newOther);
 			newOther = string.Empty;
-			_snackbar.Add("Added", Severity.Info);
+			_snackbar.Add("Added", Severity.Success);
 			//await Save();
 		}
 	}
@@ -113,10 +107,20 @@ public partial class Home
 	private async Task UploadFiles(IBrowserFile file)
 	{
 		var stream = file.OpenReadStream();
-		_character = await JsonSerializer.DeserializeAsync<Character>(stream);
+		try
+		{
+			_character = await JsonSerializer.DeserializeAsync<Character>(stream);
+			await _localStorageService.SetItemAsync(CHARACTER, _character);
+			_snackbar.Add("Upload Successful", Severity.Success);
+		}
+		catch (Exception ex)
+		{
+			_snackbar.Add(ex.ToString(), Severity.Error);
 
-		await _localStorageService.SetItemAsync(CHARACTER, _character);
-		_snackbar.Add("Upload Successful", Severity.Info);
+			Console.WriteLine(ex);
+		}
+
+
 
 	}
 }

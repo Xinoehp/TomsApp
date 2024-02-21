@@ -104,10 +104,14 @@
 
 			</MudCard>
 
-			<MudCard>
-				<MudCardContent Style="display: flex;">
-					<MudButton OnClick="@(() => ExportCharacterAsync())">Export Character</MudButton>
-					<MudButton OnClick="@(() => ClearCharacterSelected())">New Character</MudButton>
+			<MudCard Style="display: flex; align-items: flex-end; justify-content: space-between;">
+				<MudCardContent >
+					<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => ClearCharacterSelected())">New Character</MudButton>
+				</MudCardContent>
+				<MudCardContent>
+					<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => ExportCharacterAsync())">Download Character</MudButton>
+				</MudCardContent>
+				<MudCardContent>
 					<MudFileUpload T="IBrowserFile" Accept=".json" Context="fileInput" FilesChanged="UploadFiles">
 						<ButtonTemplate>
 							<MudButton HtmlTag="label"
@@ -119,7 +123,9 @@
 							</MudButton>
 						</ButtonTemplate>
 					</MudFileUpload>
-					<MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Save</MudButton>
+				</MudCardContent>
+				<MudCardContent>
+					<MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Save</MudButton>
 				</MudCardContent>
 			</MudCard>
 
