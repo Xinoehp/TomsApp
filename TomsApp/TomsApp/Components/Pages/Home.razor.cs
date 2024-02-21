@@ -28,6 +28,11 @@ public partial class Home
 	private string? newWeapon;
 	private string? newOther;
 
+	private static readonly JsonSerializerOptions _jsonIgnoreCase = new()
+	{
+		PropertyNameCaseInsensitive = true,
+	};
+
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		if (!firstRender)
@@ -80,10 +85,9 @@ public partial class Home
 
 	private async Task ExportCharacterAsync()
 	{
-		var json = JsonSerializer.Serialize(_character);
 
 		string fileName = $"{_character.Name}-{DateTime.Today:yyyy-MM-dd}";
-		await _js.InvokeVoidAsync("downloadObjectAsJson", json, fileName);
+		await _js.InvokeVoidAsync("downloadObjectAsJson", _character, fileName);
 	}
 
 	private async Task ClearCharacterSelected()
@@ -92,7 +96,7 @@ public partial class Home
         var result = await (await _dialogService.ShowAsync<WarningDialog>("Warning, this will delete your character!", options)).Result;
         if (!result.Canceled && (bool)(result.Data ?? false))
         {
-			ClearCharacter();
+			await ClearCharacter();
         }
     }
 
@@ -103,24 +107,27 @@ public partial class Home
 	}
 
 
-
 	private async Task UploadFiles(IBrowserFile file)
 	{
-		var stream = file.OpenReadStream();
+		using var stream = file.OpenReadStream();
+
 		try
 		{
-			_character = await JsonSerializer.DeserializeAsync<Character>(stream);
+			var character = await JsonSerializer.DeserializeAsync<Character>(stream, _jsonIgnoreCase);
+			if (character == null)
+			{
+				_snackbar.Add("Could not load charecter!", Severity.Error);
+				return;
+			}
+			_character = character;
 			await _localStorageService.SetItemAsync(CHARACTER, _character);
 			_snackbar.Add("Upload Successful", Severity.Success);
 		}
-		catch (Exception ex)
+		catch (Exception)
 		{
-			_snackbar.Add(ex.ToString(), Severity.Error);
-
-			Console.WriteLine(ex);
+			_snackbar.Add("Could not load charecter!", Severity.Error);
+			throw;
 		}
-
-
 
 	}
 }
