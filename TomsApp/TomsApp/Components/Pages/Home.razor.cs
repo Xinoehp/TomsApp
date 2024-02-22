@@ -116,7 +116,7 @@ public partial class Home
 			var character = await JsonSerializer.DeserializeAsync<Character>(stream, _jsonIgnoreCase);
 			if (character == null)
 			{
-				_snackbar.Add("Could not load charecter!", Severity.Error);
+				_snackbar.Add("Could not load character!", Severity.Error);
 				return;
 			}
 			_character = character;
@@ -125,7 +125,7 @@ public partial class Home
 		}
 		catch (Exception)
 		{
-			_snackbar.Add("Could not load charecter!", Severity.Error);
+			_snackbar.Add("Could not load character!", Severity.Error);
 			throw;
 		}
 
