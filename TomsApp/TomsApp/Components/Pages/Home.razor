@@ -104,24 +104,23 @@
 
 			</MudCard>
 
-			<MudCard>
-				<MudCardContent Style="display: flex;">
-					<MudButton OnClick="@(() => ExportCharacterAsync())">Export Character</MudButton>
-					<MudButton OnClick="@(() => ClearCharacterSelected())">New Character</MudButton>
-					<MudFileUpload T="IBrowserFile" Accept=".json" Context="fileInput" FilesChanged="UploadFiles">
-						<ButtonTemplate>
-							<MudButton HtmlTag="label"
-									   Variant="Variant.Filled"
-									   Color="Color.Primary"
-									   StartIcon="@Icons.Material.Filled.CloudUpload"
-									   for="@fileInput">
-								Upload Character
-							</MudButton>
-						</ButtonTemplate>
-					</MudFileUpload>
-					<MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Save</MudButton>
-				</MudCardContent>
-			</MudCard>
+
+			<MudButtonGroup Style="padding: 5px" Variant="Variant.Filled" Color="Color.Primary">
+				<MudButton StartIcon="@Icons.Material.Filled.Create" OnClick="@(() => ClearCharacterSelected())">New Character</MudButton>
+				<MudButton StartIcon="@Icons.Material.Filled.Download" OnClick="@(() => ExportCharacterAsync())">Download Character</MudButton>
+
+				<MudFileUpload Style="margin-top: 0" T="IBrowserFile" Accept=".json" Context="fileInput" FilesChanged="UploadFiles">
+					<ButtonTemplate>
+						<MudButton HtmlTag="label"
+								   StartIcon="@Icons.Material.Filled.Upload"
+								   for="@fileInput">
+							Upload Character
+						</MudButton>
+					</ButtonTemplate>
+				</MudFileUpload>
+
+				<MudButton StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit">Save</MudButton>
+			</MudButtonGroup>
 
 
 		</EditForm>
