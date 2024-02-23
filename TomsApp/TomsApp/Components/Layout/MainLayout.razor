@@ -1,14 +1,38 @@
 ﻿@inherits LayoutComponentBase
 
 
-<MudThemeProvider IsDarkMode=true/>
+<MudThemeProvider IsDarkMode=true />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-@Body
+<MudMainContent>
+	<MudAppBar>
+		<MudIconButton Icon="@Icons.Material.Filled.Menu" OnClick="@toggle" />
+		<MudButtonGroup Style="align-content:">
+			<MudFileUpload Style="margin-top: 0" T="IBrowserFile" Accept=".json" Context="fileInput" > @* put back in HTML when service is sorted FilesChanged="UploadFiles" *@
+				<ButtonTemplate>
+					<MudIconButton HtmlTag="label"
+								   Icon="@Icons.Material.Filled.Upload"
+								   Variant="Variant.Filled"
+								   for="@fileInput">
+					</MudIconButton>
+				</ButtonTemplate>
+			</MudFileUpload>
+			<MudIconButton Style: Icon="@Icons.Material.Filled.Download" Variant="Variant.Filled"></MudIconButton> @* put back in HTML when service is sorted OnClick="@(() => ExportCharacterAsync())" *@
+		</MudButtonGroup>
+	</MudAppBar>
+	<MudDrawer @bind-Open="@open" Style="position:fixed;">
+		<MudText Typo="Typo.h4">Gaia Complex</MudText>
+		<MudDrawerHeader Style="display:flex">
+			<MudText Typo="Typo.h6">Characters</MudText>
+			<CharacterList />
+		</MudDrawerHeader>
+	</MudDrawer>
+	@Body
+</MudMainContent>
 
 <div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
+	An unhandled error has occurred.
+	<a href="" class="reload">Reload</a>
+	<a class="dismiss">🗙</a>
 </div>
