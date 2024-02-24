@@ -81,7 +81,7 @@
 							<MudDivider />
 						}
 
-						<MudTextField @bind-Value="newWeapon" Label="Weapon" Variant="Variant.Text"></MudTextField>
+						<MudTextField @bind-Value="_newWeapon" Label="Weapon" Variant="Variant.Text"></MudTextField>
 						<MudButton OnClick="@(() => AddWeapon(_character.Weapons))">Add weapon</MudButton>
 
 					</MudCard>
@@ -99,7 +99,7 @@
 							<MudDivider />
 						}
 
-						<MudTextField @bind-Value="newOther" Label="Add new" Variant="Variant.Text"></MudTextField>
+						<MudTextField @bind-Value="_newOther" Label="Add new" Variant="Variant.Text"></MudTextField>
 						<MudButton OnClick="@(() => AddOther(_character.Others))">Add</MudButton>
 
 					</MudCard>

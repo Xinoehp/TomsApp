@@ -25,8 +25,8 @@ public partial class Home
 	private IDialogService _dialogService { get; set; } = default!;
 
 	private Character _character = new();
-	private string? newWeapon;
-	private string? newOther;
+	private string? _newWeapon;
+	private string? _newOther;
 
 	private static readonly JsonSerializerOptions _jsonIgnoreCase = new()
 	{
@@ -65,10 +65,10 @@ public partial class Home
 
 	private void AddWeapon(List<Weapon> Weapons)
 	{
-		if (!string.IsNullOrWhiteSpace(newWeapon))
+		if (!string.IsNullOrWhiteSpace(_newWeapon))
 		{
-			Weapons.Add(new Weapon { Name = newWeapon });
-			newWeapon = string.Empty;
+			Weapons.Add(new Weapon { Name = _newWeapon });
+			_newWeapon = string.Empty;
 			_snackbar.Add("Weapon added", Severity.Success);
 			//await Save();
 		}
@@ -76,10 +76,10 @@ public partial class Home
 
 	private void AddOther(List<string> Others)
 	{
-		if (!string.IsNullOrWhiteSpace(newOther))
+		if (!string.IsNullOrWhiteSpace(_newOther))
 		{
-			Others.Add(newOther);
-			newOther = string.Empty;
+			Others.Add(_newOther);
+			_newOther = string.Empty;
 			_snackbar.Add("Added", Severity.Success);
 			//await Save();
 		}

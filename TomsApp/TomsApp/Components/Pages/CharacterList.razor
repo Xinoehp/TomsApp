@@ -1,10 +1,20 @@
-
+@using TomsApp.Models
 
 <MudNavMenu>
-	<MudButton StartIcon="@Icons.Material.Filled.Create" @*OnClick="@(() => ClearCharacterSelected())"*@>New Character</MudButton>
-	<MudNavLink Match="NavLinkMatch.All">Store</MudNavLink>
-	<MudNavLink Match="NavLinkMatch.All">Library</MudNavLink>
-	<MudNavLink Match="NavLinkMatch.All">Community</MudNavLink>
+	<MudCard>
+		<MudText Typo="Typo.h6">Characters</MudText>
+		<MudCardContent>
+			<MudButton StartIcon="@Icons.Material.Filled.Create">New Character</MudButton> @* OnClick="@(() => ClearCharacterSelected())" *@
+		</MudCardContent>
 
+		@foreach (Character character in _characters)
+		{
+			<MudCardContent Style="display: flex;">
+				<MudTextField T="string" /> @* @bind-Value="@_character.Name" *@
+				<MudIconButton Icon="@Icons.Material.Filled.Delete" /> @* OnClick="@(() => _characters.Remove(_character))" *@
+			</MudCardContent>
+
+		}
+	</MudCard>
 
 </MudNavMenu>

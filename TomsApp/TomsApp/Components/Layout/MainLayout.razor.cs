@@ -1,14 +1,17 @@
-using MudBlazor;
-
 namespace TomsApp.Components.Layout;
 public partial class MainLayout
 {
+	private bool _isDarkMode = true;
+	private bool _open = false;
 
-	private bool open = false;
-
-	void toggle()
+	private void toggle()
 	{
-		open = !open;
+		_open = !_open;
+	}
+
+	private void darkModeToggle()
+	{
+		_isDarkMode = !_isDarkMode;
 	}
 
 	private async Task ClearCharacterSelected()

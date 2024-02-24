@@ -1,23 +1,37 @@
 @using TomsApp.Models
+
 <MudItem xs="12" sm="4">
-	<MudPaper>
-		<MudNumericField T="int" @bind-Value=@Stat.Value HelperText="@Stat.Name" Min="1" Max="10" />
+	<MudPaper Outlined>
+		<MudText Typo="Typo.h5">@Stat.Name</MudText>
+		<MudNumericField T="int" @bind-Value="@Stat.Value" HelperText="Stat" Min="1" Max="10" />
 		<MudCard>
-		@foreach (Skill skill in @Stat.Skills)
+			@foreach (Skill skill in @Stat.Skills)
 		{
 			<MudCardContent Style="display: flex;">
 				<MudField>@skill.Name</MudField>
+					<MudCheckBox UncheckedIcon="@Icons.Material.Outlined.StarBorder" CheckedIcon="@Icons.Material.Filled.Star" @bind-Value="@skill.Specialised" />
 					<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => @Stat.Skills.Remove(skill))" />
 				</MudCardContent>
-			<MudCardContent Style="display: inline-flex;">
-				<MudCheckBox @bind-Value="@skill.Advanced"> Advanced? </MudCheckBox>
-				<MudCheckBox @bind-Value="@skill.Specialised"> Specialised? </MudCheckBox>
-			</MudCardContent>
 			<MudDivider />
 		}
-		</MudCard>
+	</MudCard>
 
-		<MudTextField @bind-Value="newSkill" Label="Skill" Variant="Variant.Text"></MudTextField>
-		<MudButton OnClick="@(() => AddSkill(@Stat.Skills))">Add skill</MudButton>
+	<MudSelect T="string"
+				Style="padding: 10px"
+				Value="@_selectedSkill.Name"
+				Label="New Skill"
+				ValueChanged="@(newSelectedSkill =>
+		{
+			@Stat.Skills.Add(new Skill { Name = newSelectedSkill });
+			_snackbar.Add("Skill added", Severity.Info);
+		})">
+		@foreach (Skill statSkill in @StatSkills)
+		{
+			@if (statSkill.RelatedStat == @Stat.Name)
+			{
+				<MudSelectItem Value="@statSkill.Name" />
+			}
+		}
+	</MudSelect>
 	</MudPaper>
 </MudItem>
