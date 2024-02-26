@@ -5,6 +5,7 @@ using System.Text.Json;
 using TomsApp.Models;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Forms;
+using TomsApp.Services;
 
 
 namespace TomsApp.Components.Pages;
@@ -24,14 +25,12 @@ public partial class Home
 	[Inject]
 	private IDialogService _dialogService { get; set; } = default!;
 
-	private Character _character = new();
+	[Inject]
+	private CharacterService _characterService { get; set; } = default!;
+
+	//private Character _character = new();
 	private string? _newWeapon;
 	private string? _newOther;
-
-	private static readonly JsonSerializerOptions _jsonIgnoreCase = new()
-	{
-		PropertyNameCaseInsensitive = true,
-	};
 
 
 
@@ -47,19 +46,19 @@ public partial class Home
 	{
 		try
 		{
-			_character = await _localStorageService.GetItemAsync<Character>(CHARACTER) ?? new();
+			_characterService.Current = await _localStorageService.GetItemAsync<Character>(CHARACTER) ?? new();
 		}
 		catch (Exception)
 		{
 			await _localStorageService.RemoveItemsAsync(new string[] { CHARACTER });
-			_character = await _localStorageService.GetItemAsync<Character>(CHARACTER)
+			_characterService.Current = await _localStorageService.GetItemAsync<Character>(CHARACTER)
 				?? new();
 		}
 	}
 
 	private async Task Save()
 	{
-		await _localStorageService.SetItemAsync(CHARACTER, _character);
+		await _localStorageService.SetItemAsync(CHARACTER, _characterService.Current);
 		_snackbar.Add("Saved Successfully", Severity.Success);
 	}
 
@@ -85,13 +84,6 @@ public partial class Home
 		}
 	}
 
-	private async Task ExportCharacterAsync()
-	{
-
-		string fileName = $"{_character.Name}-{DateTime.Today:yyyy-MM-dd}";
-		await _js.InvokeVoidAsync("downloadObjectAsJson", _character, fileName);
-	}
-
 	private async Task ClearCharacterSelected()
 	{
         var options = new DialogOptions { CloseOnEscapeKey = true };
@@ -104,32 +96,10 @@ public partial class Home
 
 	private async Task ClearCharacter()
 	{
-		_character = new Character();
+		_characterService.Current = new Character();
 		await Save();
 	}
 
 
-	private async Task UploadFiles(IBrowserFile file)
-	{
-		using var stream = file.OpenReadStream();
-
-		try
-		{
-			var character = await JsonSerializer.DeserializeAsync<Character>(stream, _jsonIgnoreCase);
-			if (character == null)
-			{
-				_snackbar.Add("Could not load character!", Severity.Error);
-				return;
-			}
-			_character = character;
-			await _localStorageService.SetItemAsync(CHARACTER, _character);
-			_snackbar.Add("Upload Successful", Severity.Success);
-		}
-		catch (Exception)
-		{
-			_snackbar.Add("Could not load character!", Severity.Error);
-			throw;
-		}
-
-	}
+	
 }

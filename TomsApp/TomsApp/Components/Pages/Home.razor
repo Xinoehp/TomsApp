@@ -8,47 +8,47 @@
 	<MudPaper>
 
 
-		<EditForm OnValidSubmit="Save" Model="_character">
+		<EditForm OnValidSubmit="Save" Model="_characterService.Current">
 
 			<MudTabs>
 				<MudTabPanel Text="General Info">
-					<MudTextField T="string" @bind-Value="_character.Name" HelperText="Name" />
-					<MudTextField T="string" @bind-Value="_character.Role" HelperText="Role" />
-					<MudTextField T="string" @bind-Value="_character.Species" HelperText="Species" />
+					<MudTextField T="string" @bind-Value="_characterService.Current.Name" HelperText="Name" />
+					<MudTextField T="string" @bind-Value="_characterService.Current.Role" HelperText="Role" />
+					<MudTextField T="string" @bind-Value="_characterService.Current.Species" HelperText="Species" />
 				</MudTabPanel>
 
 				<MudTabPanel Text="Stats and Skills">
 					<MudGrid Spacing="3">
 
-						<StatsAndSkills Stat="_character.Brawn" />
-						<StatsAndSkills Stat="_character.Brains" />
-						<StatsAndSkills Stat="_character.Perception" />
-						<StatsAndSkills Stat="_character.Reflexes" />
-						<StatsAndSkills Stat="_character.Allure" />
-						<StatsAndSkills Stat="_character.Guts" />
+						<StatsAndSkills Stat="_characterService.Current.Brawn" />
+						<StatsAndSkills Stat="_characterService.Current.Brains" />
+						<StatsAndSkills Stat="_characterService.Current.Perception" />
+						<StatsAndSkills Stat="_characterService.Current.Reflexes" />
+						<StatsAndSkills Stat="_characterService.Current.Allure" />
+						<StatsAndSkills Stat="_characterService.Current.Guts" />
 
 					</MudGrid>
 				</MudTabPanel>
 
 				<MudTabPanel Text="Hit Points">
 					<MudCardContent Style="display: flex;">
-						<MudNumericField T="int" @bind-Value="_character.Endurance.Current" HelperText="Current Endurance" />
-						<MudNumericField T="int" @bind-Value="_character.Endurance.Max" HelperText="Max Endurance" />
+						<MudNumericField T="int" @bind-Value="_characterService.Current.Endurance.Current" HelperText="Current Endurance" />
+						<MudNumericField T="int" @bind-Value="_characterService.Current.Endurance.Max" HelperText="Max Endurance" />
 					</MudCardContent>
 					<MudCardContent Style="display: flex;">
-						<MudNumericField T="int" @bind-Value="_character.Pressure.Current" HelperText="Current Pressure" />
-						<MudNumericField T="int" @bind-Value="_character.Pressure.Max" HelperText="Max Pressure" />
+						<MudNumericField T="int" @bind-Value="_characterService.Current.Pressure.Current" HelperText="Current Pressure" />
+						<MudNumericField T="int" @bind-Value="_characterService.Current.Pressure.Max" HelperText="Max Pressure" />
 					</MudCardContent>
 					<MudCardContent Style="display: flex;">
-						<MudNumericField T="int" @bind-Value="_character.Morale.Current" HelperText="Current Morale" />
-						<MudNumericField T="int" @bind-Value="_character.Morale.Max" HelperText="Max Morale" />
+						<MudNumericField T="int" @bind-Value="_characterService.Current.Morale.Current" HelperText="Current Morale" />
+						<MudNumericField T="int" @bind-Value="_characterService.Current.Morale.Max" HelperText="Max Morale" />
 					</MudCardContent>
 					<MudCard>
 						<MudCardContent Style="display: flex;">
-							<MudNumericField T="int" @bind-Value="_character.Grit.Current" HelperText="Current Grit" />
-							<MudNumericField T="int" @bind-Value="_character.Grit.Max" HelperText="Max Grit" />
-							<MudNumericField T="int" @bind-Value="_character.Disconnect" HelperText="Disconnect" />
-							<MudNumericField T="int" @bind-Value="_character.Exp" HelperText="Exp" />
+							<MudNumericField T="int" @bind-Value="_characterService.Current.Grit.Current" HelperText="Current Grit" />
+							<MudNumericField T="int" @bind-Value="_characterService.Current.Grit.Max" HelperText="Max Grit" />
+							<MudNumericField T="int" @bind-Value="_characterService.Current.Disconnect" HelperText="Disconnect" />
+							<MudNumericField T="int" @bind-Value="_characterService.Current.Exp" HelperText="Exp" />
 						</MudCardContent>
 					</MudCard>
 				</MudTabPanel>
@@ -58,16 +58,16 @@
 					<MudCard>
 						<MudText Typo="Typo.h3">Armour</MudText>
 						<MudCardContent Style="display: flex;">
-							<MudTextField T="string" @bind-Value="_character.Armour.Name" HelperText="Armour" />
-							<MudTextField T="string" @bind-Value="_character.Armour.Protection" HelperText="Protection" />
-							<MudTextField T="string" @bind-Value="_character.Armour.Tolerance" HelperText="Tolerance" />
+							<MudTextField T="string" @bind-Value="_characterService.Current.Armour.Name" HelperText="Armour" />
+							<MudTextField T="string" @bind-Value="_characterService.Current.Armour.Protection" HelperText="Protection" />
+							<MudTextField T="string" @bind-Value="_characterService.Current.Armour.Tolerance" HelperText="Tolerance" />
 						</MudCardContent>
 					</MudCard>
 
 					<MudCard>
 						<MudText Typo="Typo.h3">Weapons</MudText>
 
-						@foreach (Weapon weapon in _character.Weapons)
+						@foreach (Weapon weapon in _characterService.Current.Weapons)
 						{
 							<MudCardContent Style="display: flex;">
 								<MudTextField T="string" @bind-Value="@weapon.Name" HelperText="Weapon" />
@@ -76,31 +76,31 @@
 								<MudTextField T="string" @bind-Value="@weapon.Damage" HelperText="Damage" />
 								<MudTextField T="string" @bind-Value="@weapon.Clip" HelperText="Clip" />
 								<MudTextField T="string" @bind-Value="@weapon.Rules" HelperText="Rules" />
-								<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Weapons.Remove(weapon))" />
+								<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _characterService.Current.Weapons.Remove(weapon))" />
 							</MudCardContent>
 							<MudDivider />
 						}
 
 						<MudTextField @bind-Value="_newWeapon" Label="Weapon" Variant="Variant.Text"></MudTextField>
-						<MudButton OnClick="@(() => AddWeapon(_character.Weapons))">Add weapon</MudButton>
+						<MudButton OnClick="@(() => AddWeapon(_characterService.Current.Weapons))">Add weapon</MudButton>
 
 					</MudCard>
 
 					<MudCard>
 						<MudText Typo="Typo.h3">Cybernetics, equipment, cash, notes...</MudText>
 
-						@foreach (string o in _character.Others)
+						@foreach (string o in _characterService.Current.Others)
 						{
 							string other = o;
 							<MudCardContent Style="display: flex;">
 								<MudTextField T="string" @bind-Value="@other" />
-								<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _character.Others.Remove(other))" />
+								<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _characterService.Current.Others.Remove(other))" />
 							</MudCardContent>
 							<MudDivider />
 						}
 
 						<MudTextField @bind-Value="_newOther" Label="Add new" Variant="Variant.Text"></MudTextField>
-						<MudButton OnClick="@(() => AddOther(_character.Others))">Add</MudButton>
+						<MudButton OnClick="@(() => AddOther(_characterService.Current.Others))">Add</MudButton>
 
 					</MudCard>
 

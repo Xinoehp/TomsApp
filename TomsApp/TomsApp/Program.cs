@@ -3,6 +3,7 @@ using MudBlazor.Services;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TomsApp.Components;
+using TomsApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services.AddRazorComponents()
 	.AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddMudServices();
+
+builder.Services.AddSingleton<CharacterService>();
 
 builder.Services.AddBlazoredLocalStorage(config => {
     config.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
