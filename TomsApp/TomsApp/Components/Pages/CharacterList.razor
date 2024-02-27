@@ -7,7 +7,7 @@
 			<MudButton StartIcon="@Icons.Material.Filled.Create">New Character</MudButton> @* *@
 		</MudCardContent>
 
-		@foreach (Character character in _characters)
+		@foreach (Character character in _characterService.Characters)
 		{
 			<MudCardContent Style="display: flex;">
 				<MudTextField T="string" @bind-Value="@character.Name" />

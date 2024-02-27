@@ -13,9 +13,6 @@ public partial class CharacterList
 	[Inject]
 	private IDialogService _dialogService { get; set; } = default!;
 
-	List<Character> _characters = new List<Character>();
-
-
 
 	protected override void OnInitialized()
 	{
@@ -27,7 +24,7 @@ public partial class CharacterList
 		var result = await (await _dialogService.ShowAsync<WarningDialog>("Warning, " + character.Name + " will be deleted.", options)).Result;
 		if (!result.Canceled && (bool)(result.Data ?? false))
 		{
-			_characters.Remove(character); // need to save too but the function is in the home component
+			_characterService.Characters.Remove(character); // need to save too but the function is in the home component
 			//await Save();
 		}
 	}

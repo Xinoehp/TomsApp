@@ -36,6 +36,8 @@ public partial class Home
 		if (!firstRender)
 			return;
 		await _characterService.ReadData();
+		var character = _characterService.Characters.LastOrDefault();
+		_characterService.Current = character ?? new();
 		StateHasChanged();
 	}
 
