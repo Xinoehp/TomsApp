@@ -14,7 +14,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddMudServices();
 
-builder.Services.AddSingleton<CharacterService>();
+builder.Services.AddScoped<CharacterService>();
 
 builder.Services.AddBlazoredLocalStorage(config => {
     config.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;

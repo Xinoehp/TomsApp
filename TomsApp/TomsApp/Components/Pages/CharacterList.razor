@@ -4,16 +4,15 @@
 	<MudCard>
 		<MudText Typo="Typo.h6">Characters</MudText>
 		<MudCardContent>
-			<MudButton StartIcon="@Icons.Material.Filled.Create">New Character</MudButton> @* OnClick="@(() => ClearCharacterSelected())" *@
+			<MudButton StartIcon="@Icons.Material.Filled.Create">New Character</MudButton> @* *@
 		</MudCardContent>
 
 		@foreach (Character character in _characters)
 		{
 			<MudCardContent Style="display: flex;">
-				<MudTextField T="string" /> @* @bind-Value="@_character.Name" *@
-				<MudIconButton Icon="@Icons.Material.Filled.Delete" /> @* OnClick="@(() => _characters.Remove(_character))" *@
+				<MudTextField T="string" @bind-Value="@character.Name" />
+				<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => ClearCharacterSelected(character))" />
 			</MudCardContent>
-
 		}
 	</MudCard>
 

@@ -1,8 +1,10 @@
 ﻿namespace TomsApp.Models; 
 public class Character {
 
-    // General
-    public string Name { get; set; } = string.Empty;
+	public Guid Id { get; set; } = Guid.NewGuid();
+
+	// General
+	public string Name { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
     public string Species { get; set; } = string.Empty;
 
