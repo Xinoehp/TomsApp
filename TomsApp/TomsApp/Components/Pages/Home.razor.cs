@@ -1,23 +1,11 @@
-using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using System.Text.Json;
 using TomsApp.Models;
-using Microsoft.JSInterop;
-using Microsoft.AspNetCore.Components.Forms;
 using TomsApp.Services;
-
 
 namespace TomsApp.Components.Pages;
 public partial class Home
 {
-
-
-	[Inject]
-	private IJSRuntime _js { get; set; } = default!;
-
-	[Inject]
-	private ILocalStorageService _localStorageService { get; set; } = default!;
 
 	[Inject]
 	private ISnackbar _snackbar { get; set; } = default!;
@@ -25,23 +13,26 @@ public partial class Home
 	[Inject]
 	private CharacterService _characterService { get; set; } = default!;
 
-	//private Character _character = new();
 	private string? _newWeapon;
 	private string? _newOther;
 
-
-
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		if (!firstRender)
-			return;
+		if (!firstRender) return;
 		await _characterService.ReadData();
-		var character = _characterService.Characters.LastOrDefault();
+		Character character;
+		if (_characterService.CharacterList.ActiveCharacterId == Guid.Empty)
+		{
+			character = _characterService.CharacterList.Characters.LastOrDefault() ?? new();
+			await _characterService.UpdateId(character);
+		} else
+		{
+			character = _characterService.CharacterList.Characters.Find(c => c.Id == _characterService.CharacterList.ActiveCharacterId);
+		}
 		_characterService.Current = character ?? new();
+		_characterService.Updated += async () => await InvokeAsync(StateHasChanged);
 		StateHasChanged();
 	}
-
-
 
 	public async Task Save()
 	{

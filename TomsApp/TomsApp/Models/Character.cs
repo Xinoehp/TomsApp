@@ -2,9 +2,10 @@
 public class Character {
 
 	public Guid Id { get; set; } = Guid.NewGuid();
+    public bool Current {  get; set; } = false;
 
 	// General
-	public string Name { get; set; } = string.Empty;
+	public string Name { get; set; } = "New Character";
     public string Role { get; set; } = string.Empty;
     public string Species { get; set; } = string.Empty;
 
@@ -29,8 +30,8 @@ public class Character {
 
     // Armour and Weapons
     public Armour Armour { get; set; } = new();
-	public List<Weapon> Weapons { get; set; } = new List<Weapon>();
+	public List<Weapon> Weapons { get; set; } = [];
 
 	// Items and Other
-	public List<string> Others { get; set; } = new List<string>();
+	public List<string> Others { get; set; } = [];
 }

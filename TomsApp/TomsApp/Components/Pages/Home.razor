@@ -6,109 +6,152 @@
 
 <MudContainer>
 	<MudPaper>
-
-
 		<EditForm OnValidSubmit="Save" Model="_characterService.Current">
 
-			<MudTabs>
+			<MudTabs Centered="true" PanelClass="pa-6">
 				<MudTabPanel Text="General Info">
-					<MudTextField T="string" @bind-Value="_characterService.Current.Name" HelperText="Name" />
-					<MudTextField T="string" @bind-Value="_characterService.Current.Role" HelperText="Role" />
-					<MudTextField T="string" @bind-Value="_characterService.Current.Species" HelperText="Species" />
+					<MudCard Elevation="2">
+						<MudCardContent>
+							<MudTextField T="string" @bind-Value="_characterService.Current.Name" HelperText="Name"/>
+							<MudAutocomplete T="string" Label="Role" @bind-Value="_characterService.Current.Role" SearchFunc="@_characterService.RolesSearch" CoerceValue=true />
+							<MudAutocomplete T="string" Label="Species" @bind-Value="_characterService.Current.Species" SearchFunc="@_characterService.SpeciesSearch" CoerceValue=true />
+						</MudCardContent>
+					</MudCard>
+
+					<MudCard Elevation="2">
+						<MudCardContent>
+							<MudGrid Justify="Justify.Center">
+								<MudItem xs="6" sm="3">
+									<MudNumericField T="int" Class="d-flex align-center justify-center mud-width-full py-8" @bind-Value="_characterService.Current.Endurance.Current" HelperText="Current Endurance" /> @* Mudgrid it*@
+								</MudItem>
+								<MudItem xs="6" sm="3">
+									<MudNumericField T="int" Class="d-flex align-center justify-center mud-width-full py-8" @bind-Value="_characterService.Current.Endurance.Max" HelperText="Max Endurance" />
+								</MudItem>
+								<MudItem xs="6" sm="3">
+									<MudNumericField T="int" Class="d-flex align-center justify-center mud-width-full py-8" @bind-Value="_characterService.Current.Pressure.Current" HelperText="Current Pressure" />
+								</MudItem>
+								<MudItem xs="6" sm="3">
+									<MudNumericField T="int" Class="d-flex align-center justify-center mud-width-full py-8" @bind-Value="_characterService.Current.Pressure.Max" HelperText="Max Pressure" />
+								</MudItem>
+								<MudItem xs="6" sm="3">
+									<MudNumericField T="int" Class="d-flex align-center justify-center mud-width-full py-8" @bind-Value="_characterService.Current.Morale.Current" HelperText="Current Morale" />
+								</MudItem>
+								<MudItem xs="6" sm="3">
+									<MudNumericField T="int" Class="d-flex align-center justify-center mud-width-full py-8" @bind-Value="_characterService.Current.Morale.Max" HelperText="Max Morale" />
+								</MudItem>
+								<MudItem xs="6" sm="3">
+									<MudNumericField T="int" Class="d-flex align-center justify-center mud-width-full py-8" @bind-Value="_characterService.Current.Grit.Current" HelperText="Current Grit" />
+								</MudItem>
+								<MudItem xs="6" sm="3">
+									<MudNumericField T="int" Class="d-flex align-center justify-center mud-width-full py-8" @bind-Value="_characterService.Current.Grit.Max" HelperText="Max Grit" />
+								</MudItem>
+								<MudItem xs="6" sm="3">
+									<MudNumericField T="int" Class="d-flex align-center justify-center mud-width-full py-8" @bind-Value="_characterService.Current.Disconnect" HelperText="Disconnect" />
+								</MudItem>
+								<MudItem xs="6" sm="3">
+									<MudNumericField T="int" Class="d-flex align-center justify-center mud-width-full py-8" @bind-Value="_characterService.Current.Exp" HelperText="Exp" />
+								</MudItem>
+							</MudGrid>
+						</MudCardContent>
+					</MudCard>
 				</MudTabPanel>
 
 				<MudTabPanel Text="Stats and Skills">
 					<MudGrid Spacing="3">
-
 						<StatsAndSkills Stat="_characterService.Current.Brawn" />
 						<StatsAndSkills Stat="_characterService.Current.Brains" />
 						<StatsAndSkills Stat="_characterService.Current.Perception" />
 						<StatsAndSkills Stat="_characterService.Current.Reflexes" />
 						<StatsAndSkills Stat="_characterService.Current.Allure" />
 						<StatsAndSkills Stat="_characterService.Current.Guts" />
-
 					</MudGrid>
-				</MudTabPanel>
-
-				<MudTabPanel Text="Hit Points">
-					<MudCardContent Style="display: flex;">
-						<MudNumericField T="int" @bind-Value="_characterService.Current.Endurance.Current" HelperText="Current Endurance" />
-						<MudNumericField T="int" @bind-Value="_characterService.Current.Endurance.Max" HelperText="Max Endurance" />
-					</MudCardContent>
-					<MudCardContent Style="display: flex;">
-						<MudNumericField T="int" @bind-Value="_characterService.Current.Pressure.Current" HelperText="Current Pressure" />
-						<MudNumericField T="int" @bind-Value="_characterService.Current.Pressure.Max" HelperText="Max Pressure" />
-					</MudCardContent>
-					<MudCardContent Style="display: flex;">
-						<MudNumericField T="int" @bind-Value="_characterService.Current.Morale.Current" HelperText="Current Morale" />
-						<MudNumericField T="int" @bind-Value="_characterService.Current.Morale.Max" HelperText="Max Morale" />
-					</MudCardContent>
-					<MudCard>
-						<MudCardContent Style="display: flex;">
-							<MudNumericField T="int" @bind-Value="_characterService.Current.Grit.Current" HelperText="Current Grit" />
-							<MudNumericField T="int" @bind-Value="_characterService.Current.Grit.Max" HelperText="Max Grit" />
-							<MudNumericField T="int" @bind-Value="_characterService.Current.Disconnect" HelperText="Disconnect" />
-							<MudNumericField T="int" @bind-Value="_characterService.Current.Exp" HelperText="Exp" />
-						</MudCardContent>
-					</MudCard>
 				</MudTabPanel>
 
 				<MudTabPanel Text="Equipment">
 
 					<MudCard>
-						<MudText Typo="Typo.h3">Armour</MudText>
-						<MudCardContent Style="display: flex;">
-							<MudTextField T="string" @bind-Value="_characterService.Current.Armour.Name" HelperText="Armour" />
-							<MudTextField T="string" @bind-Value="_characterService.Current.Armour.Protection" HelperText="Protection" />
-							<MudTextField T="string" @bind-Value="_characterService.Current.Armour.Tolerance" HelperText="Tolerance" />
+						<MudCardContent Style="padding: 10px">
+							<MudText Typo="Typo.h4">Armour</MudText>
+							<MudGrid >
+								<MudItem xs="8" sm="4">
+									<MudTextField T="string" @bind-Value="_characterService.Current.Armour.Name" HelperText="Armour" />
+								 </MudItem>
+								<MudItem xs="4" sm="2">
+									<MudTextField T="string" @bind-Value="_characterService.Current.Armour.Protection" HelperText="Protection" />
+								 </MudItem>
+								<MudItem xs="4" sm="2">
+									<MudNumericField @bind-Value="_characterService.Current.Armour.Tolerance" HelperText="Tolerance" />
+								 </MudItem>
+								<MudItem xs="8" sm="11">
+									<MudTextField AutoGrow T="string" @bind-Value="_characterService.Current.Armour.Rules" HelperText="Rules" />
+								</MudItem>
+							</MudGrid>
 						</MudCardContent>
 					</MudCard>
 
 					<MudCard>
-						<MudText Typo="Typo.h3">Weapons</MudText>
+						<MudCardContent Style="padding: 10px">
+							<MudText Typo="Typo.h4">Weapons</MudText>
 
-						@foreach (Weapon weapon in _characterService.Current.Weapons)
-						{
-							<MudCardContent Style="display: flex;">
-								<MudTextField T="string" @bind-Value="@weapon.Name" HelperText="Weapon" />
-								<MudTextField T="string" @bind-Value="@weapon.Skill" HelperText="Skill" />
-								<MudTextField T="string" @bind-Value="@weapon.Range" HelperText="Range" />
-								<MudTextField T="string" @bind-Value="@weapon.Damage" HelperText="Damage" />
-								<MudTextField T="string" @bind-Value="@weapon.Clip" HelperText="Clip" />
-								<MudTextField T="string" @bind-Value="@weapon.Rules" HelperText="Rules" />
-								<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _characterService.Current.Weapons.Remove(weapon))" />
-							</MudCardContent>
-							<MudDivider />
-						}
+								@foreach (Weapon weapon in _characterService.Current.Weapons)
+								{
+									
+									<MudGrid >
+										<MudItem xs="8" sm="4">
+											<MudTextField T="string" @bind-Value="@weapon.Name" HelperText="Weapon" />
+										 </MudItem>
+										<MudItem xs="4" sm="2">
+										<MudTextField T="string" @bind-Value="@weapon.Skill" HelperText="Skill" /> @* TO DO: Turn into select list. Can be multiple values though... e.g. Bootknife Weapons/Throwing*@
+										 </MudItem>
+										<MudItem xs="5" sm="2">
+										<MudTextField T="string" @bind-Value="@weapon.Range" HelperText="Range" /> @* TO DO: Turn into select list. Can be multiple values though... e.g. Bootknife Touch/Close*@
+										 </MudItem>
+										<MudItem xs="4" sm="2">
+											<MudTextField T="string" @bind-Value="@weapon.Damage" HelperText="Damage" />
+										 </MudItem>
+										<MudItem xs="3" sm="2">
+											<MudNumericField @bind-Value="@weapon.Clip" HelperText="Clip" />
+										 </MudItem>
+										<MudItem xs="9" sm="11">
+										<MudTextField AutoGrow T="string" @bind-Value="@weapon.Rules" HelperText="Rules" />
+										 </MudItem>
+										<MudItem xs="1" sm="1">
+											<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _characterService.Current.Weapons.Remove(weapon))" />
+										</MudItem>
+									</MudGrid>
+									<MudDivider/>
+								}
 
-						<MudTextField @bind-Value="_newWeapon" Label="Weapon" Variant="Variant.Text"></MudTextField>
-						<MudButton OnClick="@(() => AddWeapon(_characterService.Current.Weapons))">Add weapon</MudButton>
+							<MudTextField @bind-Value="_newWeapon" Label="Weapon Name" Variant="Variant.Text"></MudTextField>
+							<MudButton Variant="Variant.Filled" Color="Color.Primary" Style="margin: 10px" OnClick="@(() => AddWeapon(_characterService.Current.Weapons))">Add weapon</MudButton>
+						</MudCardContent>
+
 
 					</MudCard>
 
 					<MudCard>
-						<MudText Typo="Typo.h3">Cybernetics, equipment, cash, notes...</MudText>
+						<MudCardContent Style="padding: 10px">
+							<MudText Typo="Typo.h4">Cybernetics, equipment, cash, notes...</MudText>
 
-						@foreach (string o in _characterService.Current.Others)
-						{
-							string other = o;
-							<MudCardContent Style="display: flex;">
-								<MudTextField T="string" @bind-Value="@other" />
-								<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _characterService.Current.Others.Remove(other))" />
-							</MudCardContent>
-							<MudDivider />
-						}
+							@foreach (string o in _characterService.Current.Others)
+							{
+								string other = o;
+								<MudCardContent Style="display: flex;">
+									<MudTextField AutoGrow T="string" @bind-Value="@other" />
+									<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _characterService.Current.Others.Remove(other))" />
+								</MudCardContent>
+							}
 
-						<MudTextField @bind-Value="_newOther" Label="Add new" Variant="Variant.Text"></MudTextField>
-						<MudButton OnClick="@(() => AddOther(_characterService.Current.Others))">Add</MudButton>
-
+							<MudTextField AutoGrow @bind-Value="_newOther" Label="Add new" Variant="Variant.Text"></MudTextField>
+							<MudButton Variant="Variant.Filled" Color="Color.Primary" Style="margin: 10px" OnClick="@(() => AddOther(_characterService.Current.Others))">Add</MudButton>
+						</MudCardContent>
 					</MudCard>
 
 				</MudTabPanel>
 			</MudTabs>
-
-			<MudButton Color="Color.Primary" StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit">Save Character</MudButton>
-
+			<MudButtonGroup Variant="Variant.Filled" Color="Color.Primary" Style="display: flex; justify-content: center; padding: 10px" DisableElevation=true>
+				<MudButton StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit">Save Character</MudButton>
+			</MudButtonGroup>
 		</EditForm>
 	</MudPaper>
 </MudContainer>

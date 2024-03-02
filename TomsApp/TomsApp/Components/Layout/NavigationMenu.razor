@@ -4,20 +4,20 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-
 <MudAppBar>
 	<MudButtonGroup Color="Color.Primary" Variant="Variant.Filled">
 		<MudIconButton Icon="@Icons.Material.Filled.Menu" OnClick="@Toggle" />
-		<MudFileUpload Style="margin-top: 0" T="IBrowserFile" Accept=".json" Context="fileInput" FilesChanged="UploadFiles">
+		<MudFileUpload Style="margin-top: 0" T="IBrowserFile" Accept=".json" Context="fileInput" FilesChanged="_characterService.UploadCharacters">
 			<ButtonTemplate>
-				<MudIconButton HtmlTag="label"
-								Icon="@Icons.Material.Filled.Upload"
-								Variant="Variant.Filled"
-								for="@fileInput">
+				<MudIconButton 
+					HtmlTag="label"
+					Icon="@Icons.Material.Filled.Upload"
+					Variant="Variant.Filled"
+					for="@fileInput">
 				</MudIconButton>
 			</ButtonTemplate>
 		</MudFileUpload>
-		<MudIconButton Icon="@Icons.Material.Filled.Download" Variant="Variant.Filled" OnClick="@(() => ExportCharacterAsync())" />
+		<MudIconButton Icon="@Icons.Material.Filled.Download" Variant="Variant.Filled" OnClick="@(() => _characterService.ExportCharactersAsync())" />
 	</MudButtonGroup>
 </MudAppBar>
 <MudDrawer @bind-Open="@_open" Style="position:fixed;">
@@ -25,5 +25,5 @@
 	<MudDrawerHeader Style="display:flex">
 		<CharacterList />
 	</MudDrawerHeader>
-	<MudCheckBox Color="Color.Primary"  UncheckedIcon="@Icons.Material.Filled.DarkMode" CheckedIcon="@Icons.Material.Filled.LightMode" @bind-Value="@_isDarkMode" />
+	<MudCheckBox Color="Color.Primary"  UncheckedIcon="@Icons.Material.Filled.DarkMode" CheckedIcon="@Icons.Material.Filled.LightMode" @bind-Value="@_isDarkMode" Style="align-items: center" />
 </MudDrawer>

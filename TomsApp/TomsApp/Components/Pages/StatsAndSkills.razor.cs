@@ -10,19 +10,12 @@ public partial class StatsAndSkills
 
 	[Parameter]
 	[EditorRequired]
-	public Stat? Stat { get; set; }
+	public Stat Stat { get; set; } = new Stat();
 
-	Skill _selectedSkill = new Skill();
+	Skill _selectedSkill = new();
 
-	/*async*/
-	private void OnSkillChange(List<Skill> Skills)
-	{
-		Skills.Add(new Skill { Name = _selectedSkill.Name });
-		_snackbar.Add("Skill added", Severity.Info);
-	}
-
-	public List<Skill> StatSkills = new List<Skill>()
-	{
+	public List<Skill> StatSkills =
+	[
 		// Brawn Skills
 		new Skill { Name = "Climbing", RelatedStat = "Brawn" },
 		new Skill { Name = "Heavy Weapons", RelatedStat = "Brawn" },
@@ -77,6 +70,6 @@ public partial class StatsAndSkills
 		new Skill { Name = "Pilot Aircraft (A)", RelatedStat = "Perception", Advanced = true },
 		new Skill { Name = "Surveillance", RelatedStat = "Perception" },
 		new Skill { Name = "Lip Read (A)", RelatedStat = "Perception", Advanced = true },
-	};
+	];
 
 }
