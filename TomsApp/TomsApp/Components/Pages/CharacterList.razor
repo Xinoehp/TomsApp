@@ -1,0 +1,19 @@
+@using TomsApp.Models
+
+<MudNavMenu>
+	<MudCard>
+		<MudText Typo="Typo.h6">Characters</MudText>
+		<MudCardContent>
+			<MudButton StartIcon="@Icons.Material.Filled.Create" OnClick="@(() => _characterService.NewCharacter())">New Character</MudButton>
+		</MudCardContent>
+
+		@foreach (Character character in _characterService.CharacterList.Characters)
+		{
+			<MudCardContent Style="display: flex;">
+			<MudButton OnClick="@(() => _characterService.LoadCharacter(character))">@character.Name</MudButton>
+				<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _characterService.DeleteCharacter(character))" />
+			</MudCardContent>
+		}
+	</MudCard>
+
+</MudNavMenu>

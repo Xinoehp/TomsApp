@@ -1,72 +1,50 @@
-using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using System.Text.Json;
 using TomsApp.Models;
-using Microsoft.JSInterop;
-using Microsoft.AspNetCore.Components.Forms;
-
+using TomsApp.Services;
 
 namespace TomsApp.Components.Pages;
 public partial class Home
 {
-	private const string CHARACTER = "Character";
-
-	[Inject]
-	private IJSRuntime _js { get; set; } = default!;
-
-	[Inject]
-	private ILocalStorageService _localStorageService { get; set; } = default!;
 
 	[Inject]
 	private ISnackbar _snackbar { get; set; } = default!;
 
 	[Inject]
-	private IDialogService _dialogService { get; set; } = default!;
+	private CharacterService _characterService { get; set; } = default!;
 
-	private Character _character = new();
-	private string? newWeapon;
-	private string? newOther;
-
-	private static readonly JsonSerializerOptions _jsonIgnoreCase = new()
-	{
-		PropertyNameCaseInsensitive = true,
-	};
+	private string? _newWeapon;
+	private string? _newOther;
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		if (!firstRender)
-			return;
-		await ReadData();
+		if (!firstRender) return;
+		await _characterService.ReadData();
+		Character character;
+		if (_characterService.CharacterList.ActiveCharacterId == Guid.Empty)
+		{
+			character = _characterService.CharacterList.Characters.LastOrDefault() ?? new();
+			await _characterService.UpdateId(character);
+		} else
+		{
+			character = _characterService.CharacterList.Characters.Find(c => c.Id == _characterService.CharacterList.ActiveCharacterId);
+		}
+		_characterService.Current = character ?? new();
+		_characterService.Updated += async () => await InvokeAsync(StateHasChanged);
 		StateHasChanged();
 	}
 
-	private async Task ReadData()
+	public async Task Save()
 	{
-		try
-		{
-			_character = await _localStorageService.GetItemAsync<Character>(CHARACTER) ?? new();
-		}
-		catch (Exception)
-		{
-			await _localStorageService.RemoveItemsAsync(new string[] { CHARACTER });
-			_character = await _localStorageService.GetItemAsync<Character>(CHARACTER)
-				?? new();
-		}
-	}
-
-	private async Task Save()
-	{
-		await _localStorageService.SetItemAsync(CHARACTER, _character);
-		_snackbar.Add("Saved Successfully", Severity.Success);
+		await _characterService.Save();
 	}
 
 	private void AddWeapon(List<Weapon> Weapons)
 	{
-		if (!string.IsNullOrWhiteSpace(newWeapon))
+		if (!string.IsNullOrWhiteSpace(_newWeapon))
 		{
-			Weapons.Add(new Weapon { Name = newWeapon });
-			newWeapon = string.Empty;
+			Weapons.Add(new Weapon { Name = _newWeapon });
+			_newWeapon = string.Empty;
 			_snackbar.Add("Weapon added", Severity.Success);
 			//await Save();
 		}
@@ -74,60 +52,12 @@ public partial class Home
 
 	private void AddOther(List<string> Others)
 	{
-		if (!string.IsNullOrWhiteSpace(newOther))
+		if (!string.IsNullOrWhiteSpace(_newOther))
 		{
-			Others.Add(newOther);
-			newOther = string.Empty;
+			Others.Add(_newOther);
+			_newOther = string.Empty;
 			_snackbar.Add("Added", Severity.Success);
 			//await Save();
 		}
-	}
-
-	private async Task ExportCharacterAsync()
-	{
-
-		string fileName = $"{_character.Name}-{DateTime.Today:yyyy-MM-dd}";
-		await _js.InvokeVoidAsync("downloadObjectAsJson", _character, fileName);
-	}
-
-	private async Task ClearCharacterSelected()
-	{
-        var options = new DialogOptions { CloseOnEscapeKey = true };
-        var result = await (await _dialogService.ShowAsync<WarningDialog>("Warning, this will delete your character!", options)).Result;
-        if (!result.Canceled && (bool)(result.Data ?? false))
-        {
-			await ClearCharacter();
-        }
-    }
-
-	private async Task ClearCharacter()
-	{
-		_character = new Character();
-		await Save();
-	}
-
-
-	private async Task UploadFiles(IBrowserFile file)
-	{
-		using var stream = file.OpenReadStream();
-
-		try
-		{
-			var character = await JsonSerializer.DeserializeAsync<Character>(stream, _jsonIgnoreCase);
-			if (character == null)
-			{
-				_snackbar.Add("Could not load character!", Severity.Error);
-				return;
-			}
-			_character = character;
-			await _localStorageService.SetItemAsync(CHARACTER, _character);
-			_snackbar.Add("Upload Successful", Severity.Success);
-		}
-		catch (Exception)
-		{
-			_snackbar.Add("Could not load character!", Severity.Error);
-			throw;
-		}
-
 	}
 }
