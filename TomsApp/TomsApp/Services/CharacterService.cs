@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using MudBlazor;
+using System.Runtime.ConstrainedExecution;
+using System;
 using System.Text.Json;
 using TomsApp.Components;
 using TomsApp.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TomsApp.Services;
 public class CharacterService
@@ -184,10 +187,19 @@ public class CharacterService
 
 	}
 
-	public string[] roles =
-	[
-		"Bio Hacker", "Core Hacker", "CyberDoc", "Data Dealer", "Handler", "Mech", "MilTech", "Operator", "ParaMed", "Tech Trader",
-	];
+	public Dictionary<string, string> rolesNew = new()
+	{
+		{ "Bio Hacker", "Once per game you may auto-pass a Bio Hacking Hacking or Bio Hacking Persuasion test." },
+		{ "Core Hacker", "You may spend 1 Grit to reroll a 12 in a Core Hacking test. Only 1 reroll per skill test." },
+		{ "CyberDoc", "Once per game you may auto-pass a installation or repair of cybernetics test." },
+		{ "Data Dealer", "You may spend 2 Grit to auto-pass a Surveillance or Deceive skill test." },
+		{ "Handler", "You may spend 1 Grit to auto-pass a Meld skill test. -1 modifier to all Awareness skill tests." },
+		{ "Mech", "You may spend 1 Grit to reroll a 12 in driving, riding, piloting or vehicle repair tests. Only 1 reroll per skill test." },
+		{ "MilTech", "-1 to all Electronics and Weapons Tech skill tests related to making repairs." },
+		{ "Operator", "+1 to initiative at the start of combat." },
+		{ "ParaMed", "Each time you give medical aid, the subject recovers 1 additional (E) and 1 point of Morale." },
+		{ "Tech Trader", "-1 to all Streetwise and Barter skill tests related to locating items, buyers and negotiating prices." },
+	};
 
 	public async Task<IEnumerable<string>> RolesSearch(string value)
 	{
@@ -195,8 +207,8 @@ public class CharacterService
 		await Task.Delay(5);
 
 		// if text is null or empty, show complete list
-		if (string.IsNullOrEmpty(value)) return roles;
-		return roles.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+		if (string.IsNullOrEmpty(value)) return rolesNew.Keys;
+		return rolesNew.Keys.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
 	}
 
 	public string[] species =

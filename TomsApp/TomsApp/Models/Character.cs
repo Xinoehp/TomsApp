@@ -8,9 +8,10 @@ public class Character {
 	public string Name { get; set; } = "New Character";
     public string Role { get; set; } = string.Empty;
     public string Species { get; set; } = string.Empty;
+    public string Trait { get; set; } = string.Empty;
 
-    // Stats and Skills
-    public Stat Brawn { get; set; } = new Stat { Name = "Brawn" };
+	// Stats and Skills
+	public Stat Brawn { get; set; } = new Stat { Name = "Brawn" };
     public Stat Brains { get; set; } = new Stat { Name = "Brains" };
     public Stat Perception { get; set; } = new Stat { Name = "Perception" };
     public Stat Reflexes { get; set; } = new Stat { Name = "Reflexes" };
@@ -32,6 +33,7 @@ public class Character {
     public Armour Armour { get; set; } = new();
 	public List<Weapon> Weapons { get; set; } = [];
 
-	// Items and Other
+    // Items and Other
+    public int Nec { get; set; }
 	public List<string> Others { get; set; } = [];
 }

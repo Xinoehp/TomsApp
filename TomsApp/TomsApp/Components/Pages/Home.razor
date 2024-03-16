@@ -13,8 +13,13 @@
 					<MudCard Elevation="2">
 						<MudCardContent>
 							<MudTextField T="string" @bind-Value="_characterService.Current.Name" HelperText="Name"/>
-							<MudAutocomplete T="string" Label="Role" @bind-Value="_characterService.Current.Role" SearchFunc="@_characterService.RolesSearch" CoerceValue=true />
 							<MudAutocomplete T="string" Label="Species" @bind-Value="_characterService.Current.Species" SearchFunc="@_characterService.SpeciesSearch" CoerceValue=true />
+							<MudAutocomplete T="string" Label="Role" @bind-Value="_characterService.Current.Role" SearchFunc="@_characterService.RolesSearch" CoerceValue=true />
+							@if ((_characterService.Current.Trait == "" || _characterService.rolesNew.ContainsValue(_characterService.Current.Trait) ) && _characterService.rolesNew.ContainsKey(_characterService.Current.Role))
+							{
+								_characterService.Current.Trait = _characterService.rolesNew[_characterService.Current.Role];
+							}
+							<MudTextField AutoGrow @bind-Value="_characterService.Current.Trait" HelperText="Trait" />
 						</MudCardContent>
 					</MudCard>
 
@@ -125,22 +130,22 @@
 							<MudTextField @bind-Value="_newWeapon" Label="Weapon Name" Variant="Variant.Text"></MudTextField>
 							<MudButton Variant="Variant.Filled" Color="Color.Primary" Style="margin: 10px" OnClick="@(() => AddWeapon(_characterService.Current.Weapons))">Add weapon</MudButton>
 						</MudCardContent>
-
-
 					</MudCard>
 
 					<MudCard>
 						<MudCardContent Style="padding: 10px">
 							<MudText Typo="Typo.h4">Cybernetics, equipment, cash, notes...</MudText>
 
-							@foreach (string o in _characterService.Current.Others)
+							<MudNumericField @bind-Value="@_characterService.Current.Nec" HelperText="Nec" />
+
+							@foreach (int index in Enumerable.Range(0, _characterService.Current.Others.Count))
 							{
-								string other = o;
 								<MudCardContent Style="display: flex;">
-									<MudTextField AutoGrow T="string" @bind-Value="@other" />
-									<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _characterService.Current.Others.Remove(other))" />
+									<MudTextField AutoGrow T="string" @bind-Value="_characterService.Current.Others[index]" />
+									<MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(() => _characterService.Current.Others.RemoveAt(index))" />
 								</MudCardContent>
 							}
+
 
 							<MudTextField AutoGrow @bind-Value="_newOther" Label="Add new" Variant="Variant.Text"></MudTextField>
 							<MudButton Variant="Variant.Filled" Color="Color.Primary" Style="margin: 10px" OnClick="@(() => AddOther(_characterService.Current.Others))">Add</MudButton>
